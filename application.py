@@ -1,4 +1,3 @@
-
 from flask import Flask, render_template, request
 import os
 import pymysql
@@ -59,8 +58,22 @@ def users():
     except Exception as e:
         return {"error": str(e)}
 
+# ==============================
+# NEW PAGE: HTML TABLE VIEW
+# ==============================
+@app.route("/view-users")
+def view_users():
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM users")
+        data = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        return render_template("users.html", users=data)
+    except Exception as e:
+        return f"Error: {str(e)}"
+
+
 if __name__ == "__main__":
     app.run()
-
-
-
