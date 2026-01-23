@@ -5,9 +5,9 @@ import pymysql
 app = Flask(__name__)
 application = app     # IMPORTANT for Elastic Beanstalk
 
-RDS_HOST= "database-1.cchw6kg86ljd.us-east-1.rds.amazonaws.com"
-RDS_USER= "admin"
-RDS_PASSWORD= "Arsu123321"
+RDS_HOST= "localhost"
+RDS_USER= "root"
+RDS_PASSWORD= "root123"
 RDS_DB=  "database-1"
 
 

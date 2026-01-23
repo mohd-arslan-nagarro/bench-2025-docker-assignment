@@ -1,17 +1,25 @@
 name: first workflow
-on: workflow_dispatch
+on: push
 jobs:
   first-job: 
     runs-on: ubuntu-latest
     steps:
       - name: print greeting 
-        run: echo "hello everyone"
+        run: echo "hello we are deploying the app in elastic beanstalk"
       - name: bye bye
-        run: echo "byeeeeeeee!!"
-  second-job:        
-    runs-on: ubuntu-latest
-    steps:
-      - name: print greeting 2
-        run: echo "hello everyone "
-      - name: bye bye 2
-        run: echo "byeeeeeeee!!"
+        run: mkdir newfolder
+      - name: Zipping the files
+        run: zip -r deployment-package.zip .
+      - name: 
+        run: ls 
+      - name: elastic beanstalk deploy
+        uses: einaregilsson/beanstalk-deploy@v20
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: "bench-assignment"
+          environment_name: "BenchAssignment-env"
+          region: "us-east-1"
+          version_label: "v1"
+          bucket_name: "elasticbeanstalk-us-east-1-123456789012"
+          bucket_key: "deployment-package.zip"
