@@ -1,8 +1,24 @@
-version: '3.9'
+version: "3.9"
 
 services:
+  mysql:
+    build:
+      context: ./mysql-image-code
+    image: mysql-with-schema
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: database-1
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    restart: always
+
   flask-app:
-    build: .
+    build:
+      context: .
+    image: flask-app-image
     container_name: flask-app
     ports:
       - "5000:5000"
@@ -13,19 +29,7 @@ services:
       DB_NAME: database-1
     depends_on:
       - mysql
-
-  mysql:
-    image: mysql:8.0
-    container_name: mysql-db
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: root123
-      MYSQL_DATABASE: database-1
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
 volumes:
   mysql_data:

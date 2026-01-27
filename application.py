@@ -3,12 +3,13 @@ import os
 import pymysql
 
 app = Flask(__name__)
-application = app     # IMPORTANT for Elastic Beanstalk
+application = app  # Elastic Beanstalk compatibility
 
-RDS_HOST= "mysql"
-RDS_USER= "root"
-RDS_PASSWORD= "root123"
-RDS_DB=  "database-1"
+RDS_HOST = os.getenv("DB_HOST")
+RDS_USER = os.getenv("DB_USER")
+RDS_PASSWORD = os.getenv("DB_PASSWORD")
+RDS_DB = os.getenv("DB_NAME")
+
 
 
 def get_connection():
