@@ -1,0 +1,10 @@
+CREATE DATABASE IF NOT EXISTS `database-1`;
+
+USE `database-1`;
+
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    number VARCHAR(20)
+);
+

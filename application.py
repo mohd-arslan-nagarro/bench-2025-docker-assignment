@@ -5,7 +5,7 @@ import pymysql
 app = Flask(__name__)
 application = app     # IMPORTANT for Elastic Beanstalk
 
-RDS_HOST= "localhost"
+RDS_HOST= "mysql"
 RDS_USER= "root"
 RDS_PASSWORD= "root123"
 RDS_DB=  "database-1"
@@ -76,4 +76,4 @@ def view_users():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0", port=5000, debug=True)
