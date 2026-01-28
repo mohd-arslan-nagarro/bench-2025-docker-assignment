@@ -2,9 +2,7 @@ version: "3.9"
 
 services:
   mysql:
-    build:
-      context: ./mysql-image-code
-    image: mysql-with-schema
+    image: mohdarslan/mysql-with-schema:1.0
     container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: root123
@@ -16,9 +14,7 @@ services:
     restart: always
 
   flask-app:
-    build:
-      context: .
-    image: flask-app-image
+    image: mohdarslan/flask-app:1.0
     container_name: flask-app
     ports:
       - "5000:5000"
