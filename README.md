@@ -6,6 +6,7 @@ docker build -t mysql-with-schema .
 docker build -t  flask-app-image .
 
 #Create a docker network so that the application can talk to mysql container
+
 docker network create application-network
 
 #Run mysql container in the same network -
@@ -31,6 +32,8 @@ docker run -d \
 #to run it using  docker-compose you can use below command
 
   docker compose pull
+  
   docker compose up
 
 #But one of the image is private so docker-compose won't be able to pull that image without access
+
