@@ -1,31 +1,50 @@
-version: "3.9"
-
 services:
   mysql:
-    image: mohdarslan/mysql-with-schema:1.0
-    container_name: mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: root123
-      MYSQL_DATABASE: database-1
+    image: mohdarslan/mysql-with-schema:3.0
+
+    env_file:
+      - .env
+
     volumes:
       - mysql_data:/var/lib/mysql
-    ports:
-      - "3306:3306"
-    restart: always
+
+    networks:
+      - backend
+
+    restart: unless-stopped
+
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p$MYSQL_ROOT_PASSWORD"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+
 
   flask-app:
-    image: mohdarslan/flask-app:1.0
-    container_name: flask-app
+    image: mohdarslan/flask-app:secure
+
+    env_file:
+      - .env
+
     ports:
       - "5000:5000"
-    environment:
-      DB_HOST: mysql
-      DB_USER: root
-      DB_PASSWORD: root123
-      DB_NAME: database-1
+
     depends_on:
-      - mysql
-    restart: always
+      mysql:
+        condition: service_healthy
+
+    networks:
+      - backend
+
+    restart: unless-stopped
+
+    tmpfs:
+      - /tmp
+
+networks:
+  backend:
+    driver: bridge
 
 volumes:
   mysql_data:
